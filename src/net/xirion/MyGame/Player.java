@@ -1,7 +1,6 @@
 package net.xirion.MyGame;
 
 import java.awt.*;
-import java.util.Random;
 
 public class Player extends GameObject{
 
@@ -19,6 +18,8 @@ public class Player extends GameObject{
 
         x = Game.clamp(x, 0, Game.WIDTH - 37);
         y = Game.clamp(y, 0, Game.HEIGHT - 60);
+
+        handler.addObject(new Trail(x,y,ID.Trail,Color.BLUE,32,32,0.05f,handler));
 
         collision();
 
