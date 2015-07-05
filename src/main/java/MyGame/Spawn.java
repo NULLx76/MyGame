@@ -1,10 +1,11 @@
 package main.java.MyGame;
 
+import java.security.SecureRandom;
 import java.util.Random;
 public class Spawn {
     private Handler handler;
     private HUD hud;
-    private Random r = new Random();
+    Random r = new SecureRandom();
     int scoreKeep = 0;
     public Spawn(Handler handler, HUD hud){
         this.handler = handler;

@@ -1,13 +1,14 @@
 package main.java.MyGame;
 
 import java.awt.*;
+import java.security.SecureRandom;
 import java.util.Random;
 
 public class EnemyBossBullet extends GameObject{
 
 
     private Handler handler;
-    Random r = new Random();
+    Random r = new SecureRandom();
 
 
     public EnemyBossBullet(int x, int y, ID id, Handler handler){

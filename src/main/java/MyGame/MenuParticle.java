@@ -1,12 +1,13 @@
 package main.java.MyGame;
 
 import java.awt.*;
+import java.security.SecureRandom;
 import java.util.Random;
 
 public class MenuParticle extends GameObject{
     private Handler handler;
 
-    private Random r = new Random();
+    private Random r = new SecureRandom();
 
     private Color col;
 

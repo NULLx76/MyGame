@@ -2,6 +2,7 @@ package main.java.MyGame;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.security.SecureRandom;
 import java.util.Random;
 
 public class Game extends Canvas implements Runnable {
@@ -9,7 +10,7 @@ public class Game extends Canvas implements Runnable {
     private static final long serialVersionUID = 5755600125683007216L;
     private Thread thread;
     private boolean running = false;
-    private Random r;
+    private Random r = new SecureRandom();
     private Handler handler;
     private HUD hud;
     private Spawn spawner;
@@ -34,7 +35,7 @@ public class Game extends Canvas implements Runnable {
         new Window(WIDTH,HEIGHT,"MyGame by victorheld", this);
 
         spawner = new Spawn(handler, hud);
-        r = new Random();
+        Random r = new SecureRandom();
 
         if(gameState == STATE.Game){
             handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler));
@@ -129,7 +130,6 @@ public class Game extends Canvas implements Runnable {
         }else if(gameState == STATE.Menu || gameState == STATE.Help  || gameState == STATE.End){
             menu.render(g);
         }
-
 
         g.dispose();
         bs.show();

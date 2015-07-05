@@ -5,13 +5,14 @@ import main.java.MyGame.Game.STATE;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.security.SecureRandom;
 import java.util.Random;
 
 public class Menu extends MouseAdapter{
 
     private Game game;
     private Handler handler;
-    private Random r = new Random();
+    private Random r = new SecureRandom();
     private HUD hud;
 
     public Menu(Game game,Handler handler,HUD hud){
