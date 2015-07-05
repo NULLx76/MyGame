@@ -33,7 +33,6 @@ public class Game extends Canvas implements Runnable {
 
         new Window(WIDTH,HEIGHT,"MyGame by victorheld", this);
 
-
         spawner = new Spawn(handler, hud);
         r = new Random();
 
@@ -114,6 +113,13 @@ public class Game extends Canvas implements Runnable {
             return;
         }
         Graphics g = bs.getDrawGraphics();
+        Graphics2D g2d = (Graphics2D)g;
+
+        //Anti aliasing
+        g2d.setRenderingHint(
+                RenderingHints.KEY_TEXT_ANTIALIASING,
+                RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+
         g.setColor(Color.black);
         g.fillRect(0, 0, WIDTH, HEIGHT);
         handler.render(g);

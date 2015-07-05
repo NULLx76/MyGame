@@ -17,10 +17,10 @@ public class BasicEnemy extends GameObject{
         y += velY;
         if(y <= 0 || y >= Game.HEIGHT - 32) velY *= -1;
         if(x <= 0 || x >= Game.WIDTH - 16) velX *= -1;
-        handler.addObject(new Trail((int)x,(int) y, ID.Trail, Color.red, 16, 16, 0.02f,handler));
+        handler.addObject(new Trail((int)x,(int) y, ID.Trail, Color.RED, 16, 16, 0.02f,handler));
     }
     public void render(Graphics g){
-        g.setColor(Color.red);
+        g.setColor(Color.RED);
         g.fillRect((int)x,(int)y,16,16);
     }
 }
