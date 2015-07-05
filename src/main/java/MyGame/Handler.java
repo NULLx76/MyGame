@@ -1,11 +1,11 @@
-package net.xirion.MyGame;
+package main.java.MyGame;
 
 import java.awt.*;
 import java.util.LinkedList;
 
 public class Handler {
 
-    LinkedList<GameObject> object = new LinkedList<>();
+    LinkedList<GameObject> object = new LinkedList<GameObject>();
 
     public void tick(){
         for(int i=0; i < object.size(); i++){

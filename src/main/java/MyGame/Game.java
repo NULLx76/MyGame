@@ -1,4 +1,4 @@
-package net.xirion.MyGame;
+package main.java.MyGame;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -31,7 +31,7 @@ public class Game extends Canvas implements Runnable {
         this.addKeyListener(new KeyInput(handler));
         this.addMouseListener(menu);
 
-        new Window(WIDTH,HEIGHT,"Let's Build a Game!", this);
+        new Window(WIDTH,HEIGHT,"A Game!", this);
 
 
         spawner = new Spawn(handler, hud);

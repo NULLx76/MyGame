@@ -1,6 +1,6 @@
-package net.xirion.MyGame;
+package main.java.MyGame;
 
-import net.xirion.MyGame.Game.STATE;
+import main.java.MyGame.Game.STATE;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;

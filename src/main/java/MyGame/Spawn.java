@@ -1,4 +1,4 @@
-package net.xirion.MyGame;
+package main.java.MyGame;
 
 import java.util.Random;
 public class Spawn {

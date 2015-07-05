@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: net.xirion.MyGame.Game
+Main-Class: main.java.MyGame.Game
 
