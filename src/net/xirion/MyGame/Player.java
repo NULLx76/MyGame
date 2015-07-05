@@ -21,11 +21,16 @@ public class Player extends GameObject{
         collision();
     }
     private void collision(){
-        for(int i = 0; i < handler.object.size(); i++){
+        for(int i = 0; i < handler.object.size(); i++) {
             GameObject tempObject = handler.object.get(i);
-            if(tempObject.getId() == ID.BasicEnemy || tempObject.getId()==ID.FastEnemy||tempObject.getId()== ID.SmartEnemy){
-                if(getBounds().intersects(tempObject.getBounds())){
+            if (tempObject.getId() == ID.BasicEnemy || tempObject.getId() == ID.FastEnemy || tempObject.getId() == ID.SmartEnemy) {
+                if (getBounds().intersects(tempObject.getBounds())) {
                     HUD.HEALTH -= 2;
+                }
+            }
+            else if (tempObject.getId() == ID.EnemyBoss) {
+                if (getBounds().intersects(tempObject.getBounds())) {
+                    HUD.HEALTH = 0;
                 }
             }
         }

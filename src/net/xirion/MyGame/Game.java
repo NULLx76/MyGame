@@ -3,28 +3,49 @@ package net.xirion.MyGame;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
+
 public class Game extends Canvas implements Runnable {
-    private static final long serialVersionUID = 1550691097823471818L;
     public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
+    private static final long serialVersionUID = 5755600125683007216L;
     private Thread thread;
     private boolean running = false;
     private Random r;
     private Handler handler;
     private HUD hud;
     private Spawn spawner;
+    private Menu menu;
+
+    public enum STATE {
+      Menu,
+      Help,
+      Game,
+      End
+    }
+
+    public static STATE gameState = STATE.Menu;
+
     public Game(){
         handler = new Handler();
+        hud = new HUD();
+        menu = new Menu(this, handler,hud);
         this.addKeyListener(new KeyInput(handler));
+        this.addMouseListener(menu);
 
         new Window(WIDTH,HEIGHT,"Let's Build a Game!", this);
 
-        hud = new HUD();
+
         spawner = new Spawn(handler, hud);
         r = new Random();
 
-        handler.addObject(new Player(WIDTH/2-32, HEIGHT/2-32, ID.Player, handler));
+        if(gameState == STATE.Game){
+            handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler));
+            handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.BasicEnemy, handler));
+        }else{
+            for(int i =0; i< 10; i++){
 
-        handler.addObject(new EnemyBoss(Game.WIDTH /2 - 48, -120, ID.BasicEnemy, handler));
+                handler.addObject(new MenuParticle(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.MenuParticle, handler));
+            }
+        }
     }
     public synchronized void start(){
         thread = new Thread(this);
@@ -60,7 +81,8 @@ public class Game extends Canvas implements Runnable {
             frames++;
             if(System.currentTimeMillis() - timer > 1000){
                 timer += 1000;
-                System.out.println("FPS: " + frames);
+                //System.out.println("FPS: " + frames);
+                hud.setFps(frames);
                 frames = 0;
             }
         }
@@ -68,8 +90,22 @@ public class Game extends Canvas implements Runnable {
     }
     private void tick(){
         handler.tick();
-        hud.tick();
-        spawner.tick();
+
+        if(gameState == STATE.Game){
+            hud.tick();
+            spawner.tick();
+
+            if(HUD.HEALTH <= 0){
+                gameState = STATE.End;
+                HUD.HEALTH=100;
+                handler.clearEnemies();
+                for(int i =0; i< 10; i++) {
+                    handler.addObject(new MenuParticle(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.MenuParticle, handler));
+                }
+            }
+        }else if(gameState == STATE.Menu || gameState == STATE.End){
+            menu.tick();
+        }
     }
     private void render(){
         BufferStrategy bs = this.getBufferStrategy();
@@ -81,7 +117,14 @@ public class Game extends Canvas implements Runnable {
         g.setColor(Color.black);
         g.fillRect(0, 0, WIDTH, HEIGHT);
         handler.render(g);
-        hud.render(g);
+
+        if(gameState == STATE.Game){
+            hud.render(g);
+        }else if(gameState == STATE.Menu || gameState == STATE.Help  || gameState == STATE.End){
+            menu.render(g);
+        }
+
+
         g.dispose();
         bs.show();
     }

@@ -6,6 +6,8 @@ public class HUD {
     private float greenValue = 255;
     private int score = 0;
     private int level = 1;
+    private int fps = 0;
+
     public void tick(){
         HEALTH = (int) Game.clamp(HEALTH, 0, 100);
         greenValue = (int) Game.clamp(greenValue, 0, 255);
@@ -21,8 +23,9 @@ public class HUD {
         g.drawRect(15, 15, 200, 32);
         g.drawString("Score: " + score, 15, 64);
         g.drawString("Level: " + level, 15, 80);
+        g.drawString("FPS:   " + fps,15,96);
     }
-    public void score(int score){
+    public void setScore(int score){
         this.score = score;
     }
     public int getScore(){
@@ -33,5 +36,11 @@ public class HUD {
     }
     public void setLevel(int level){
         this.level = level;
+    }
+    public int getFps(){
+        return fps;
+    }
+    public void setFps(int fps){
+        this.fps = fps;
     }
 }
