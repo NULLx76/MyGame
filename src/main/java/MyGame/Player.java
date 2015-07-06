@@ -1,10 +1,7 @@
 package main.java.MyGame;
 
 import java.awt.*;
-import java.security.SecureRandom;
-import java.util.Random;
 public class Player extends GameObject{
-    Random r = new SecureRandom();
     Handler handler;
     public Player(int x,int y, ID id, Handler handler){
         super(x, y, id);

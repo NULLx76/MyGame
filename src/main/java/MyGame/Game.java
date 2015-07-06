@@ -78,7 +78,7 @@ public class Game extends Canvas implements Runnable {
             while(delta >= 1){
                 try {
                     tick();
-                } catch (FileNotFoundException e) {e.printStackTrace();}catch (UnsupportedEncodingException e) {e.printStackTrace();}
+                } catch (FileNotFoundException | UnsupportedEncodingException e) {e.printStackTrace();}
                 delta--;
             }
             if(running)
@@ -94,11 +94,10 @@ public class Game extends Canvas implements Runnable {
         stop();
     }
     public static int countLines(String filename) throws IOException {
-        InputStream is = new BufferedInputStream(new FileInputStream(filename));
-        try {
+        try (InputStream is = new BufferedInputStream(new FileInputStream(filename))) {
             byte[] c = new byte[1024];
             int count = 0;
-            int readChars = 0;
+            int readChars;
             boolean empty = true;
             while ((readChars = is.read(c)) != -1) {
                 empty = false;
@@ -109,8 +108,6 @@ public class Game extends Canvas implements Runnable {
                 }
             }
             return (count == 0 && !empty) ? 1 : count;
-        } finally {
-            is.close();
         }
     }
     private void tick() throws FileNotFoundException, UnsupportedEncodingException {
@@ -154,8 +151,8 @@ public class Game extends Canvas implements Runnable {
                 Arrays.sort(array);
 
                 PrintWriter writer = new PrintWriter("score.txt", "UTF-8");
-                for(int i=0; array.length > i; i++) {
-                    writer.println(array[i]);
+                for (int anArray : array) {
+                    writer.println(anArray);
                 }
                 writer.close();
 
@@ -199,9 +196,9 @@ public class Game extends Canvas implements Runnable {
     }
     public static float clamp(float var, float min, float max){
         if(var >= max)
-            return var = max;
+            return max;
         else if(var < min)
-            return var = min;
+            return min;
         else
             return var;
     }

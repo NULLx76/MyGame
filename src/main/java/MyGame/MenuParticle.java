@@ -7,8 +7,6 @@ import java.util.Random;
 public class MenuParticle extends GameObject{
     private Handler handler;
 
-    private Random r = new SecureRandom();
-
     private Color col;
 
 
@@ -16,12 +14,13 @@ public class MenuParticle extends GameObject{
         super(x,y,id);
         this.handler = handler;
 
+        Random r = new SecureRandom();
         velX = (r.nextInt(7 - -7) + -7);
         velY = (r.nextInt(7 - -7) + -7);
         if(velX == 0)velX =1;
         if(velY == 0)velY =1;
 
-        col = new Color(r.nextInt(255),r.nextInt(255),r.nextInt(255));
+        col = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
 
 
     }
