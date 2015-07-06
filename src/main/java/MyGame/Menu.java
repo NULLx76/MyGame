@@ -10,18 +10,14 @@ import java.util.Random;
 
 public class Menu extends MouseAdapter{
 
-    private Game game;
     private Handler handler;
     private Random r = new SecureRandom();
     private HUD hud;
 
-    public Menu(Game game,Handler handler,HUD hud){
-        this.game = game;
+    public Menu(Handler handler, HUD hud){
         this.handler = handler;
         this.hud = hud;
     }
-
-
 
     public void mousePressed(MouseEvent e) {
         int mx = e.getX();
@@ -29,24 +25,24 @@ public class Menu extends MouseAdapter{
 
 
         //play button
-        if(mouseOver(mx, my,210,150,200,64) && game.gameState == STATE.Menu){
-            game.gameState = STATE.Game;
+        if(mouseOver(mx, my,210,150,200,64) && Game.gameState == STATE.Menu){
+            Game.gameState = STATE.Game;
             handler.addObject(new Player(Game.WIDTH / 2 - 32, Game.HEIGHT / 2 - 32, ID.Player, handler));
             handler.clearEnemies();
             handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.BasicEnemy, handler));
         }
         //Help Button
-        if(mouseOver(mx, my,210,250,200,64) && game.gameState == STATE.Menu){
-            game.gameState = STATE.Help;
+        if(mouseOver(mx, my,210,250,200,64) && Game.gameState == STATE.Menu){
+            Game.gameState = STATE.Help;
         }
         //back button for help
-        if(game.gameState == STATE.Help && mouseOver(mx, my,210,350,200,64)){
-            game.gameState = STATE.Menu;
+        if(Game.gameState == STATE.Help && mouseOver(mx, my,210,350,200,64)){
+            Game.gameState = STATE.Menu;
             return;
         }
         //Try Again Button
-        if(game.gameState == STATE.End && mouseOver(mx, my,210,350,200,64)){
-            game.gameState = STATE.Game;
+        if(Game.gameState == STATE.End && mouseOver(mx, my,210,350,200,64)){
+            Game.gameState = STATE.Game;
             hud.setLevel(1);
             hud.setScore(0);
             handler.addObject(new Player(Game.WIDTH / 2 - 32, Game.HEIGHT / 2 - 32, ID.Player, handler));
@@ -54,7 +50,7 @@ public class Menu extends MouseAdapter{
             handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.BasicEnemy, handler));
         }
         //Quit Button
-        if(mouseOver(mx, my,210,350,200,64) && game.gameState == STATE.Menu){
+        if(mouseOver(mx, my,210,350,200,64) && Game.gameState == STATE.Menu){
             System.exit(1);
         }
     }
@@ -62,12 +58,8 @@ public class Menu extends MouseAdapter{
 
     }
 
-    private boolean mouseOver(int mx, int my,int x, int y, int width, int height){
-        if(mx > x && mx < x + width ){
-            if(my >y && my < y +height){
-                return true;
-            }else return false;
-        }else return false;
+    private boolean mouseOver(int mx, int my,int x, int y, int width, int height) {
+        return mx > x && mx < x + width && my > y && my < y + height;
     }
 
     public void tick(){
@@ -75,9 +67,9 @@ public class Menu extends MouseAdapter{
     }
 
     public void render(Graphics g){
-        if(game.gameState == STATE.Menu){
-            Font fnt = new Font("Segoe UI", 1, 50);
-            Font fnt2 = new Font("Segoe UI", 1, 30);
+        if(Game.gameState == STATE.Menu){
+            Font fnt = new Font("Segoe UI", Font.PLAIN, 50);
+            Font fnt2 = new Font("Segoe UI", Font.PLAIN, 30);
 
             g.setFont(fnt);
             g.setColor(Color.white);
@@ -92,25 +84,27 @@ public class Menu extends MouseAdapter{
 
             g.drawRect(210,350,200,64);
             g.drawString("Quit",270, 390);
-        }else if(game.gameState == STATE.Help){
-            Font fnt = new Font("Segoe UI", 1, 50);
-            Font fnt2 = new Font("Segoe UI", 1, 30);
-            Font fnt3 = new Font("Segoe UI", 1, 20);
+        }else if(Game.gameState == STATE.Help){
+            Font fnt = new Font("Segoe UI", Font.PLAIN, 50);
+            Font fnt2 = new Font("Segoe UI", Font.PLAIN, 30);
+            Font fnt3 = new Font("Segoe UI", Font.PLAIN, 20);
 
             g.setFont(fnt);
             g.setColor(Color.white);
-            g.drawString("Help", 240, 70);
+            g.drawString("Help", 220, 70);
+
 
             g.setFont(fnt3);
-            g.drawString("USE [WASD] keys to move the player and dodge enemies!",50,200);
+            g.drawString("Use WASD to move", Game.WIDTH /2 - 96,200);
+
 
             g.setFont(fnt2);
             g.drawRect(210, 350, 200, 64);
-            g.drawString("Back",270, 390);
-        }else if(game.gameState == STATE.End){
-            Font fnt = new Font("Segoe UI", 1, 50);
-            Font fnt2 = new Font("Segoe UI", 1, 30);
-            Font fnt3 = new Font("Segoe UI", 1, 20);
+            g.drawString("Back", 270, 390);
+        }else if(Game.gameState == STATE.End){
+            Font fnt = new Font("Segoe UI", Font.PLAIN, 50);
+            Font fnt2 = new Font("Segoe UI", Font.PLAIN, 30);
+            Font fnt3 = new Font("Segoe UI", Font.PLAIN, 20);
 
             g.setFont(fnt);
             g.setColor(Color.white);

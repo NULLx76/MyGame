@@ -2,8 +2,11 @@ package main.java.MyGame;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.*;
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Game extends Canvas implements Runnable {
     public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
@@ -28,7 +31,7 @@ public class Game extends Canvas implements Runnable {
     public Game(){
         handler = new Handler();
         hud = new HUD();
-        menu = new Menu(this, handler,hud);
+        menu = new Menu(handler,hud);
         this.addKeyListener(new KeyInput(handler));
         this.addMouseListener(menu);
 
@@ -73,7 +76,9 @@ public class Game extends Canvas implements Runnable {
             delta += (now - lastTime) / ns;
             lastTime = now;
             while(delta >= 1){
-                tick();
+                try {
+                    tick();
+                } catch (FileNotFoundException e) {e.printStackTrace();}catch (UnsupportedEncodingException e) {e.printStackTrace();}
                 delta--;
             }
             if(running)
@@ -88,14 +93,72 @@ public class Game extends Canvas implements Runnable {
         }
         stop();
     }
-    private void tick(){
+    public static int countLines(String filename) throws IOException {
+        InputStream is = new BufferedInputStream(new FileInputStream(filename));
+        try {
+            byte[] c = new byte[1024];
+            int count = 0;
+            int readChars = 0;
+            boolean empty = true;
+            while ((readChars = is.read(c)) != -1) {
+                empty = false;
+                for (int i = 0; i < readChars; ++i) {
+                    if (c[i] == '\n') {
+                        ++count;
+                    }
+                }
+            }
+            return (count == 0 && !empty) ? 1 : count;
+        } finally {
+            is.close();
+        }
+    }
+    private void tick() throws FileNotFoundException, UnsupportedEncodingException {
         handler.tick();
 
         if(gameState == STATE.Game){
             hud.tick();
             spawner.tick();
 
+            File f = new File("score.txt");
+
             if(HUD.HEALTH <= 0){
+                //Scoreboard
+                String score = String.valueOf(hud.getScore());
+
+                try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(f, true)))) {
+                    out.println(score);
+                }catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                Scanner s = null;
+                try {
+                    s = new Scanner(f);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                assert s != null;
+                int[] array;
+
+                try {
+                    array = new int[countLines("score.txt")];
+                } catch (IOException e) {
+                    array = new int[0];
+                    e.printStackTrace();
+                }
+
+                for (int i = 0; i < array.length; i++) {
+                    array[i] = s.nextInt();
+                }
+                Arrays.sort(array);
+
+                PrintWriter writer = new PrintWriter("score.txt", "UTF-8");
+                for(int i=0; array.length > i; i++) {
+                    writer.println(array[i]);
+                }
+                writer.close();
+
                 gameState = STATE.End;
                 HUD.HEALTH=100;
                 handler.clearEnemies();
