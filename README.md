@@ -4,6 +4,9 @@
 
 A simple game made in java where you are a little white cube and you need to dodge the other cubes.
 
-#Screenshots
-![Screenshots](http://imgur.com/a/zMQyc)
+# [Screenshots](http://imgur.com/a/zMQyc)
 
+#TODO
+* Better name
+* Logo
+* Music
