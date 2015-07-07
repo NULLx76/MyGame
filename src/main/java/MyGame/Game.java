@@ -14,7 +14,7 @@ public class Game extends Canvas implements Runnable {
     private Thread thread;
     private boolean running = false;
     private Random r = new SecureRandom();
-    private Handler handler;
+    private static Handler handler;
     private HUD hud;
     private Spawn spawner;
     private Menu menu;
@@ -40,12 +40,9 @@ public class Game extends Canvas implements Runnable {
         spawner = new Spawn(handler, hud);
         Random r = new SecureRandom();
 
-        if(gameState == STATE.Game){
-            handler.addObject(new Player(WIDTH / 2 - 32, HEIGHT / 2 - 32, ID.Player, handler));
-            handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.BasicEnemy, handler));
-        }else{
+        if(gameState != STATE.Game){
+            handler.object.clear();
             for(int i =0; i< 10; i++){
-
                 handler.addObject(new MenuParticle(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.MenuParticle, handler));
             }
         }
@@ -102,15 +99,15 @@ public class Game extends Canvas implements Runnable {
             while ((readChars = is.read(c)) != -1) {
                 empty = false;
                 for (int i = 0; i < readChars; ++i) {
-                    if (c[i] == '\n') {
-                        ++count;
-                    }
+                    if (c[i] == '\n') ++count;
                 }
             }
             return (count == 0 && !empty) ? 1 : count;
         }
     }
+    private STATE oldState = STATE.Menu;
     private void tick() throws FileNotFoundException, UnsupportedEncodingException {
+
         handler.tick();
 
         if(gameState == STATE.Game){
@@ -120,6 +117,8 @@ public class Game extends Canvas implements Runnable {
             File f = new File("score.txt");
 
             if(HUD.HEALTH <= 0){
+                menu.mute();
+
                 //Scoreboard
                 String score = String.valueOf(hud.getScore());
 

@@ -2,13 +2,14 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 
+//noinspection GroovyUnusedAssignment
 sourceCompatibility = 7
 
-repositories {aa
+repositories {
     mavenCentral()
 }
 
-///noinspection GroovyAssignabilityCheck
+//noinspection GroovyAssignabilityCheck
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
