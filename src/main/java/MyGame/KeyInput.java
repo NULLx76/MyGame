@@ -2,14 +2,11 @@ package main.java.MyGame;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.security.SecureRandom;
-import java.util.Random;
 
 public class KeyInput extends KeyAdapter{
     private Handler handler;
     private Menu menu;
     private HUD hud;
-    private Random r = new SecureRandom();
     private boolean[] keyDown = new boolean[4];
     public KeyInput(Handler handler){
 

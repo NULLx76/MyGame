@@ -2,10 +2,12 @@ package main.java.MyGame;
 
 import main.java.MyGame.Game.STATE;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.security.SecureRandom;
 import java.util.Random;
@@ -16,6 +18,8 @@ public class Menu extends MouseAdapter{
     private Handler handler;
     private static Random r = new SecureRandom();
     private HUD hud;
+
+    private boolean muted = false;
 
     boolean playing = false;
     Clip clip = null;
@@ -28,8 +32,13 @@ public class Menu extends MouseAdapter{
     public void mousePressed(MouseEvent e) {
         int mx = e.getX();
         int my = e.getY();
-
-
+        // Mute button 10, 400, 32, 432
+        if(mouseOver(mx, my,10, 400, 32, 432)){
+            muted = !muted;
+            if(muted){
+                mute();
+            }
+        }
         //play button
         if(mouseOver(mx, my,210,150,200,64) && Game.gameState == STATE.Menu){
             startGame();
@@ -45,10 +54,6 @@ public class Menu extends MouseAdapter{
         }
         //Try Again Button
         if(Game.gameState == STATE.End && mouseOver(mx, my,210,350,200,64)){
-            if(clip != null){
-                clip.stop();
-                clip.close();
-            }
             startGame();
         }
         //Quit Button
@@ -67,6 +72,12 @@ public class Menu extends MouseAdapter{
     public void tick(){
 
     }
+    public void mute(){
+        if(playing) {
+            clip.stop();
+            clip.close();
+        }
+    }
 
     static String[] file = {"Music/Killing_Time.wav","Music/Latin_Industries.wav","Music/MTA.wav","Music/Rhinoceros.wav","Music/Ropocalypse_2.wav","Music/Severe_Tire_Damage.wav"};
 
@@ -74,6 +85,7 @@ public class Menu extends MouseAdapter{
         handler.object.clear();
         Game.gameState = STATE.Game;
         //Music
+        if(!muted){
         AudioInputStream audioIn = null;
         try {
             audioIn = AudioSystem.getAudioInputStream(Menu.class.getResource(file[r.nextInt(5 + 1)]));
@@ -95,8 +107,8 @@ public class Menu extends MouseAdapter{
         clip.loop(-1);
         clip.start();
         playing =true;
-
-        //Reset Level +Hud and start game
+        }
+        //Reset Level + Hud and start game
         hud.setLevel(1);
         hud.setScore(0);
         handler.addObject(new Player(Game.WIDTH / 2 - 32, Game.HEIGHT / 2 - 32, ID.Player, handler));
@@ -122,6 +134,19 @@ public class Menu extends MouseAdapter{
         }
     }
     public void render(Graphics g){
+        try {
+            BufferedImage image;
+            if(muted){
+                image = ImageIO.read(Menu.class.getResourceAsStream("image/white-mute-32.png"));
+            }else{
+                image = ImageIO.read(Menu.class.getResourceAsStream("image/white-volume-up-32.png"));
+            }
+            g.setColor(Color.white);
+            g.drawImage(image, 10, 400, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         if(Game.gameState == STATE.Menu){
             Font fnt = new Font("Segoe UI", Font.PLAIN, 50);
             Font fnt2 = new Font("Segoe UI", Font.PLAIN, 30);
