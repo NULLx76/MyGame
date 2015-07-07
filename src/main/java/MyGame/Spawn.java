@@ -31,7 +31,7 @@ public class Spawn {
             else if(hud.getLevel() == 7){
                 handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.FastEnemy, handler));
             }
-            else if(hud.getLevel() == 10){
+            else if(hud.getLevel()  == 10 ){
                 handler.clearEnemies();
                 handler.addObject(new EnemyBoss(Game.WIDTH /2 - 48, -150, ID.EnemyBoss, handler));
             }
