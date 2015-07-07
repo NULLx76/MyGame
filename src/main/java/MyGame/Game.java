@@ -19,6 +19,8 @@ public class Game extends Canvas implements Runnable {
     private Spawn spawner;
     private Menu menu;
 
+    private STATE oldState = STATE.Menu;
+
     public enum STATE {
       Menu,
       Help,
@@ -108,8 +110,16 @@ public class Game extends Canvas implements Runnable {
 
     private void tick() throws FileNotFoundException, UnsupportedEncodingException {
 
+        if(gameState != oldState){
+            oldState = gameState; handler.object.clear();
+            if (gameState == STATE.Menu || gameState == STATE.End || gameState == STATE.Help)
+                for(int j = 0; j < 10; j++) Game.handler.addObject(new MenuParticle(r.nextInt(Game.WIDTH-32),r.nextInt(Game.HEIGHT-32), ID.MenuParticle, handler));
+            else if(gameState == STATE.Game){
+                Game.handler.addObject(new Player(Game.WIDTH/2-32,Game.HEIGHT/2-32, ID.Player,handler));
+                Game.handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH-32),r.nextInt(Game.HEIGHT-32), ID.BasicEnemy,handler));
+            }
+        }
         handler.tick();
-
         if(gameState == STATE.Game){
             hud.tick();
             spawner.tick();

@@ -17,9 +17,15 @@ class Handler {
 
     public void render(Graphics g){
         for(int i=0; i < object.size(); i++){
-            if(object.get(i) != null) {
-                GameObject tempObject = object.get(i);
-                tempObject.render(g);
+            if(i >= object.size()) {
+                //Do nothing
+            }else {
+                try {
+                    GameObject tempObject = object.get(i);
+                    tempObject.render(g);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         }
     }
