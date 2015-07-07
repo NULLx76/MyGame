@@ -2,4 +2,17 @@
 
 [![Latest Download](http://xirion.net/download1.png)](https://github.com/victorheld/MyGame/releases/latest)
 
-A simple game made in java
+A simple game made in java where you are a little white cube and you need to dodge the other cubes.
+
+#Screenshots
+![Menu](http://i.imgur.com/BLw8kuB.png)
+
+Menu
+
+![Level 1](http://i.imgur.com/YiKTdq5.png)
+
+Level 1
+
+![Level 5](http://i.imgur.com/etCiNU6.png)
+
+Level 5
