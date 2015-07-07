@@ -76,7 +76,7 @@ public class Menu extends MouseAdapter{
         //Music
         AudioInputStream audioIn = null;
         try {
-            audioIn = AudioSystem.getAudioInputStream(Menu.class.getResource(file[r.nextInt(5 - 0 + 1)]));
+            audioIn = AudioSystem.getAudioInputStream(Menu.class.getResource(file[r.nextInt(5 + 1)]));
         } catch (UnsupportedAudioFileException | IOException e) {
             e.printStackTrace();
         }
