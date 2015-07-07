@@ -5,8 +5,10 @@ import main.java.MyGame.Game.STATE;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.*;
 import java.security.SecureRandom;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Menu extends MouseAdapter{
 
@@ -66,6 +68,23 @@ public class Menu extends MouseAdapter{
 
     }
 
+    public static int countLines(String filename) throws IOException {
+        try (InputStream is = new BufferedInputStream(new FileInputStream(filename))) {
+            byte[] c = new byte[1024];
+            int count = 0;
+            int readChars;
+            boolean empty = true;
+            while ((readChars = is.read(c)) != -1) {
+                empty = false;
+                for (int i = 0; i < readChars; ++i) {
+                    if (c[i] == '\n') {
+                        ++count;
+                    }
+                }
+            }
+            return (count == 0 && !empty) ? 1 : count;
+        }
+    }
     public void render(Graphics g){
         if(Game.gameState == STATE.Menu){
             Font fnt = new Font("Segoe UI", Font.PLAIN, 50);
@@ -110,6 +129,50 @@ public class Menu extends MouseAdapter{
             g.setColor(Color.white);
             g.drawString("Game Over", 180, 70);
 
+            //Get Highscore
+            File f = new File("score.txt");
+
+            Scanner s = null;
+            try {
+                s = new Scanner(f);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            assert s != null;
+            int[] array;
+
+            int lines;
+            try {
+                lines = countLines("score.txt");
+                array = new int[lines];
+            } catch (IOException e) {
+                array = new int[0];
+                lines = 0;
+                e.printStackTrace();
+            }
+
+            for (int i = 0; i < array.length; i++) {
+                array[i] = s.nextInt();
+            }
+
+            int highscore;
+            boolean newHigh;
+            if(lines != 0) {
+                highscore = array[lines - 1 ];
+            }else{
+                highscore = hud.getScore();
+            }
+            newHigh = highscore == hud.getScore();
+
+
+            g.setFont(fnt3);
+            if(newHigh) {
+                g.drawString("New Highscore!", 175, 150);
+            }
+            else{
+                g.drawString("Highscore: " + highscore,175,150);
+            }
+
             g.setFont(fnt3);
             g.drawString("You lost with a score with: " + hud.getScore(),175,200);
 
@@ -118,7 +181,7 @@ public class Menu extends MouseAdapter{
 
             g.setFont(fnt2);
             g.drawRect(210, 350, 200, 64);
-            g.drawString("Try Again",245, 390);
+            g.drawString("Try Again", 245, 390);
         }
 
     }
