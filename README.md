@@ -10,3 +10,17 @@ A simple game made in java where you are a little white cube and you need to dod
 * Better name
 * Logo
 * Music
+
+
+
+
+#License
+Music:
+* "Rhinoceros" Kevin MacLeod (incompetech.com)
+* "Severe Tire Damage" Kevin MacLeod (incompetech.com)
+* "Latin Industries" Kevin MacLeod (incompetech.com)
+* "Ropocolypse 2" Kevin MacLeod (incompetech.com)
+
+All Licensed under Creative Commons: By Attribution 3.0
+http://creativecommons.org/licenses/by/3.0/
+
