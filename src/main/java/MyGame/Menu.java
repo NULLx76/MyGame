@@ -2,6 +2,7 @@ package main.java.MyGame;
 
 import main.java.MyGame.Game.STATE;
 
+import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,8 +14,11 @@ import java.util.Scanner;
 public class Menu extends MouseAdapter{
 
     private Handler handler;
-    private Random r = new SecureRandom();
+    private static Random r = new SecureRandom();
     private HUD hud;
+
+    boolean playing = false;
+    Clip clip = null;
 
     public Menu(Handler handler, HUD hud){
         this.handler = handler;
@@ -28,10 +32,7 @@ public class Menu extends MouseAdapter{
 
         //play button
         if(mouseOver(mx, my,210,150,200,64) && Game.gameState == STATE.Menu){
-            Game.gameState = STATE.Game;
-            handler.addObject(new Player(Game.WIDTH / 2 - 32, Game.HEIGHT / 2 - 32, ID.Player, handler));
-            handler.clearEnemies();
-            handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.BasicEnemy, handler));
+            startGame();
         }
         //Help Button
         if(mouseOver(mx, my,210,250,200,64) && Game.gameState == STATE.Menu){
@@ -44,12 +45,11 @@ public class Menu extends MouseAdapter{
         }
         //Try Again Button
         if(Game.gameState == STATE.End && mouseOver(mx, my,210,350,200,64)){
-            Game.gameState = STATE.Game;
-            hud.setLevel(1);
-            hud.setScore(0);
-            handler.addObject(new Player(Game.WIDTH / 2 - 32, Game.HEIGHT / 2 - 32, ID.Player, handler));
-            handler.clearEnemies();
-            handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.BasicEnemy, handler));
+            if(clip != null){
+                clip.stop();
+                clip.close();
+            }
+            startGame();
         }
         //Quit Button
         if(mouseOver(mx, my,210,350,200,64) && Game.gameState == STATE.Menu){
@@ -66,6 +66,42 @@ public class Menu extends MouseAdapter{
 
     public void tick(){
 
+    }
+
+    static String[] file = {"Music/Killing_Time.wav","Music/Latin_Industries.wav","Music/MTA.wav","Music/Rhinoceros.wav","Music/Ropocalypse_2.wav","Music/Severe_Tire_Damage.wav"};
+
+    public void startGame(){
+        handler.object.clear();
+        Game.gameState = STATE.Game;
+        //Music
+        AudioInputStream audioIn = null;
+        try {
+            audioIn = AudioSystem.getAudioInputStream(Menu.class.getResource(file[r.nextInt(5 - 0 + 1)]));
+        } catch (UnsupportedAudioFileException | IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            clip = AudioSystem.getClip();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+        try {
+            assert clip != null;
+            clip.open(audioIn);
+        } catch (LineUnavailableException | IOException e) {
+            e.printStackTrace();
+        }
+        clip.loop(-1);
+        clip.start();
+        playing =true;
+
+        //Reset Level +Hud and start game
+        hud.setLevel(1);
+        hud.setScore(0);
+        handler.addObject(new Player(Game.WIDTH / 2 - 32, Game.HEIGHT / 2 - 32, ID.Player, handler));
+        handler.clearEnemies();
+        handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.BasicEnemy, handler));
     }
 
     public static int countLines(String filename) throws IOException {

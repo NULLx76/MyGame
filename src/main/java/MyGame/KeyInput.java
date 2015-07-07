@@ -2,10 +2,17 @@ package main.java.MyGame;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.security.SecureRandom;
+import java.util.Random;
+
 public class KeyInput extends KeyAdapter{
     private Handler handler;
+    private Menu menu;
+    private HUD hud;
+    private Random r = new SecureRandom();
     private boolean[] keyDown = new boolean[4];
     public KeyInput(Handler handler){
+
         this.handler = handler;
         keyDown[0] = false;
         keyDown[1] = false;
@@ -13,6 +20,7 @@ public class KeyInput extends KeyAdapter{
         keyDown[3] = false;
     }
     public void keyPressed(KeyEvent e){
+        menu = new Menu(handler,hud);
         int key = e.getKeyCode();
         for(int i = 0; i < handler.object.size(); i++){
             GameObject tempObject = handler.object.get(i);
