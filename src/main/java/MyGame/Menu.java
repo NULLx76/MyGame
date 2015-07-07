@@ -158,12 +158,11 @@ public class Menu extends MouseAdapter{
             int highscore;
             boolean newHigh;
             if(lines != 0) {
-                highscore = array[lines - 1 ];
+                highscore = array[array.length - 1];
             }else{
                 highscore = hud.getScore();
             }
             newHigh = highscore == hud.getScore();
-
 
             g.setFont(fnt3);
             if(newHigh) {
