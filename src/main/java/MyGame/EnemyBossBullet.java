@@ -8,7 +8,7 @@ public class EnemyBossBullet extends GameObject{
 
 
     private Handler handler;
-    Random r = new SecureRandom();
+    private Random r = new SecureRandom();
 
 
     public EnemyBossBullet(int x, int y, ID id, Handler handler){

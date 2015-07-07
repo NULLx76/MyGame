@@ -3,7 +3,7 @@ package main.java.MyGame;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class KeyInput extends KeyAdapter{
+class KeyInput extends KeyAdapter{
     private Handler handler;
     private Menu menu;
     private HUD hud;

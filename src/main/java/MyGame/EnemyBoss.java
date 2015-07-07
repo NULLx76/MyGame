@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class EnemyBoss extends GameObject{
     private Handler handler;
-    Random r = new SecureRandom();
+    private Random r = new SecureRandom();
     private int timer = 80;
     private int timer2 = 50;
 

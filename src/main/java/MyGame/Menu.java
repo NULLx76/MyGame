@@ -13,7 +13,7 @@ import java.security.SecureRandom;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Menu extends MouseAdapter{
+class Menu extends MouseAdapter{
 
     private Handler handler;
     private static Random r = new SecureRandom();
@@ -21,8 +21,8 @@ public class Menu extends MouseAdapter{
 
     private boolean muted = false;
 
-    boolean playing = false;
-    Clip clip = null;
+    private boolean playing = false;
+    private Clip clip = null;
 
     public Menu(Handler handler, HUD hud){
         this.handler = handler;
@@ -79,9 +79,9 @@ public class Menu extends MouseAdapter{
         }
     }
 
-    static String[] file = {"Music/Killing_Time.wav","Music/Latin_Industries.wav","Music/MTA.wav","Music/Rhinoceros.wav","Music/Ropocalypse_2.wav","Music/Severe_Tire_Damage.wav"};
+    private static String[] file = {"Music/Killing_Time.wav","Music/Latin_Industries.wav","Music/MTA.wav","Music/Rhinoceros.wav","Music/Ropocalypse_2.wav","Music/Severe_Tire_Damage.wav"};
 
-    public void startGame(){
+    private void startGame(){
         handler.object.clear();
         Game.gameState = STATE.Game;
         //Music
@@ -116,7 +116,7 @@ public class Menu extends MouseAdapter{
         handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.BasicEnemy, handler));
     }
 
-    public static int countLines(String filename) throws IOException {
+    private static int countLines(String filename) throws IOException {
         try (InputStream is = new BufferedInputStream(new FileInputStream(filename))) {
             byte[] c = new byte[1024];
             int count = 0;

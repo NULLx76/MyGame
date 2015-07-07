@@ -2,13 +2,15 @@ package main.java.MyGame;
 
 import java.awt.*;
 
-public abstract class GameObject {
+abstract class GameObject {
 
-    protected float x, y;
-    protected ID id;
-    protected float velX, velY;
+    float x;
+    float y;
+    private ID id;
+    float velX;
+    float velY;
 
-    public GameObject(float x, float y, ID id){
+    GameObject(float x, float y, ID id){
         this.x = x;
         this.y = y;
         this.id = id;
@@ -16,7 +18,7 @@ public abstract class GameObject {
 
     public abstract void tick();
     public abstract void render(Graphics g);
-    public abstract Rectangle getBounds();
+    protected abstract Rectangle getBounds();
 
     public void setX(int x){
         this.x = x;

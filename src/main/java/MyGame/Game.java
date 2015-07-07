@@ -28,7 +28,7 @@ public class Game extends Canvas implements Runnable {
 
     public static STATE gameState = STATE.Menu;
 
-    public Game(){
+    private Game(){
         handler = new Handler();
         hud = new HUD();
         menu = new Menu(handler,hud);
@@ -52,7 +52,7 @@ public class Game extends Canvas implements Runnable {
         thread.start();
         running = true;
     }
-    public synchronized void stop(){
+    private synchronized void stop(){
         try{
             thread.join();
             running = false;
@@ -90,7 +90,7 @@ public class Game extends Canvas implements Runnable {
         }
         stop();
     }
-    public static int countLines(String filename) throws IOException {
+    private static int countLines(String filename) throws IOException {
         try (InputStream is = new BufferedInputStream(new FileInputStream(filename))) {
             byte[] c = new byte[1024];
             int count = 0;
@@ -105,7 +105,7 @@ public class Game extends Canvas implements Runnable {
             return (count == 0 && !empty) ? 1 : count;
         }
     }
-    private STATE oldState = STATE.Menu;
+
     private void tick() throws FileNotFoundException, UnsupportedEncodingException {
 
         handler.tick();

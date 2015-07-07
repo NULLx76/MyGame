@@ -9,7 +9,7 @@ A simple game made in java where you are a little white cube and you need to dod
 You can look over [here](https://github.com/victorheld/MyGame/issues?q=is%3Aopen+label%3A%22help+wanted%22) for issues i need help with. And you can of course always make a pull request if you think you can add something to this project. 
 
 # Did it crash?
-Please submit what happend and the error log over [here](https://github.com/victorheld/MyGame/issues). And I will try to fix it as soon as possible.
+Please submit what happened and the error log over [here](https://github.com/victorheld/MyGame/issues). And I will try to fix it as soon as possible.
 
 #License
 Music:

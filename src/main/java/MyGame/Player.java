@@ -2,7 +2,7 @@ package main.java.MyGame;
 
 import java.awt.*;
 public class Player extends GameObject{
-    Handler handler;
+    private Handler handler;
     public Player(int x,int y, ID id, Handler handler){
         super(x, y, id);
         this.handler = handler;
