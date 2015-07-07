@@ -4,11 +4,11 @@ apply plugin: 'java'
 
 sourceCompatibility = 7
 
-repositories {
+repositories {aa
     mavenCentral()
 }
 
-/*noinspection GroovyAssignabilityCheck */
+///noinspection GroovyAssignabilityCheck
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
