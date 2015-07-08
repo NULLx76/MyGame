@@ -31,8 +31,8 @@ public class Game extends Canvas implements Runnable {
     public static STATE gameState = STATE.Menu;
 
     private Game(){
-        handler = new Handler();
         hud = new HUD();
+        handler = new Handler(hud);
         menu = new Menu(handler,hud);
         this.addKeyListener(new KeyInput(handler));
         this.addMouseListener(menu);
@@ -115,7 +115,7 @@ public class Game extends Canvas implements Runnable {
             if (gameState == STATE.Menu || gameState == STATE.End || gameState == STATE.Help)
                 for(int j = 0; j < 10; j++) Game.handler.addObject(new MenuParticle(r.nextInt(Game.WIDTH-32),r.nextInt(Game.HEIGHT-32), ID.MenuParticle, handler));
             else if(gameState == STATE.Game){
-                Game.handler.addObject(new Player(Game.WIDTH/2-32,Game.HEIGHT/2-32, ID.Player,handler));
+                Game.handler.addObject(new Player(Game.WIDTH/2-32,Game.HEIGHT/2-32, ID.Player,handler,hud));
                 Game.handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH-32),r.nextInt(Game.HEIGHT-32), ID.BasicEnemy,handler));
             }
         }
@@ -126,7 +126,7 @@ public class Game extends Canvas implements Runnable {
 
             File f = new File("score.txt");
 
-            if(HUD.HEALTH <= 0){
+            if(hud.HEALTH <= 0){
                 menu.mute();
 
                 //Scoreboard
@@ -166,7 +166,7 @@ public class Game extends Canvas implements Runnable {
                 writer.close();
 
                 gameState = STATE.End;
-                HUD.HEALTH=100;
+                hud.HEALTH=100;
                 handler.clearEnemies();
                 for(int i =0; i< 10; i++) {
                     handler.addObject(new MenuParticle(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.MenuParticle, handler));

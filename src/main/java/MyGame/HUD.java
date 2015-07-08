@@ -2,7 +2,7 @@ package main.java.MyGame;
 
 import java.awt.*;
 class HUD {
-    public static float HEALTH = 100;
+    public float HEALTH = 100;
     private float greenValue = 255;
     private int score = 0;
     private int level = 1;

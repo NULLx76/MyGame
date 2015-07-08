@@ -3,9 +3,11 @@ package main.java.MyGame;
 import java.awt.*;
 public class Player extends GameObject{
     private Handler handler;
-    public Player(int x,int y, ID id, Handler handler){
+    private HUD hud;
+    public Player(int x,int y, ID id, Handler handler,HUD hud){
         super(x, y, id);
         this.handler = handler;
+        this.hud = hud;
     }
     public Rectangle getBounds(){
         return new Rectangle((int) x,(int) y, 32, 32);
@@ -23,12 +25,12 @@ public class Player extends GameObject{
             GameObject tempObject = handler.object.get(i);
             if (tempObject.getId() == ID.BasicEnemy || tempObject.getId() == ID.FastEnemy || tempObject.getId() == ID.SmartEnemy) {
                 if (getBounds().intersects(tempObject.getBounds())) {
-                    HUD.HEALTH -= 2;
+                    hud.HEALTH -= 2;
                 }
             }
             else if (tempObject.getId() == ID.EnemyBoss) {
                 if (getBounds().intersects(tempObject.getBounds())) {
-                    HUD.HEALTH = 0;
+                    hud.HEALTH = 0;
                 }
             }
         }
