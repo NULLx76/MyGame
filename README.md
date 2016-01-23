@@ -1,4 +1,4 @@
-# MyGame [![Build Status](https://travis-ci.org/victorheld/MyGame.svg?branch=master)](https://travis-ci.org/victorheld/MyGame) [![Build Status](http://80.60.83.220:8080/buildStatus/icon?job=MyGame)](http://80.60.83.220:8080/job/MyGame/)
+# MyGame [![Build Status](https://travis-ci.org/victorheld/MyGame.svg?branch=master)](https://travis-ci.org/victorheld/MyGame) [![Build Status](http://80.60.83.220:8080/buildStatus/icon?job=MyGame)](http://80.60.83.220:8070/job/MyGame/)
 
 [![Latest Download](http://xirion.net/download2.png)](https://github.com/victorheld/MyGame/releases/latest)
 
